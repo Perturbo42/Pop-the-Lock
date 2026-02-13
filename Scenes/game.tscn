@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://dbs1kbhqtydrx"]
+
+[ext_resource type="Texture2D" uid="uid://b56vgh43habkr" path="res://Art/Lock-Base.png" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://cu5x8e2nvs7nw" path="res://Scripts/game.gd" id="1_i6g32"]
+[ext_resource type="Texture2D" uid="uid://ct88ygrpqe75d" path="res://Art/Lock-Hat.png" id="1_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://b2ellpefhmrk" path="res://Art/Circle.png" id="3_3dryh"]
+[ext_resource type="Script" uid="uid://dju3hgbv5vgi0" path="res://Scripts/pivot_circle.gd" id="4_1l0tm"]
+[ext_resource type="Script" uid="uid://534kckywbffo" path="res://Scripts/pivot_paddle.gd" id="4_i6g32"]
+[ext_resource type="Texture2D" uid="uid://cdksw5i7u7au1" path="res://Art/Paddle.png" id="4_wowpa"]
+[ext_resource type="Script" uid="uid://bdsdjq5isxk1g" path="res://Scripts/score.gd" id="8_v158k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wowpa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6g32"]
+
+[node name="Game" type="Node2D" unique_id=497422713 node_paths=PackedStringArray("paddle", "text")]
+script = ExtResource("1_i6g32")
+paddle = NodePath("Pivot-Paddle")
+text = NodePath("Score")
+
+[node name="Lock-Hat" type="Node2D" parent="." unique_id=2106917235]
+position = Vector2(307, 380)
+
+[node name="Sprite2D" type="Sprite2D" parent="Lock-Hat" unique_id=825691293]
+texture = ExtResource("1_qxrlw")
+
+[node name="Lock-Base" type="Node2D" parent="." unique_id=536641766]
+position = Vector2(307, 650)
+
+[node name="Sprite2D" type="Sprite2D" parent="Lock-Base" unique_id=985036825]
+texture = ExtResource("1_ebmjs")
+
+[node name="Pivot-Circle" type="Node2D" parent="." unique_id=711597398 node_paths=PackedStringArray("paddle")]
+position = Vector2(307, 650)
+script = ExtResource("4_1l0tm")
+paddle = NodePath("../Pivot-Paddle")
+
+[node name="Circle" type="Node2D" parent="Pivot-Circle" unique_id=335423790]
+position = Vector2(0, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot-Circle/Circle" unique_id=1411510562]
+texture = ExtResource("3_3dryh")
+
+[node name="Area2D" type="Area2D" parent="Pivot-Circle/Circle" unique_id=1801586631]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot-Circle/Circle/Area2D" unique_id=226259657]
+scale = Vector2(2.065, 2.065)
+shape = SubResource("CircleShape2D_wowpa")
+
+[node name="Pivot-Paddle" type="Node2D" parent="." unique_id=2116385024 node_paths=PackedStringArray("area")]
+position = Vector2(307, 650)
+rotation = 3.1415927
+script = ExtResource("4_i6g32")
+area = NodePath("Paddle/Area2D")
+
+[node name="Paddle" type="Node2D" parent="Pivot-Paddle" unique_id=1488174452]
+position = Vector2(0, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot-Paddle/Paddle" unique_id=74478992]
+texture = ExtResource("4_wowpa")
+
+[node name="Area2D" type="Area2D" parent="Pivot-Paddle/Paddle" unique_id=1547384634]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot-Paddle/Paddle/Area2D" unique_id=1997518685]
+scale = Vector2(0.81, 2.975)
+shape = SubResource("RectangleShape2D_i6g32")
+
+[node name="Score" type="Label" parent="." unique_id=1144924460]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 221.0
+offset_top = 580.0
+offset_right = 393.0
+offset_bottom = 717.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_v158k")
